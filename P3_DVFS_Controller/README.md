@@ -186,7 +186,8 @@ combinational request outputs and gives scheduling-dependent results.
 
 ## 6. Simulation results
 
-AMD Vivado Simulator (XSim) v2026.1, behavioral simulation.
+AMD Vivado Simulator (XSim) v2026.1, behavioral simulation. Full transcript:
+[`simulation/sim_console_output.txt`](simulation/sim_console_output.txt).
 
 ```
 Time 40000: Request level 10
@@ -262,7 +263,18 @@ which is the operand that actually moves during the wait.
 Expected result: four `PASS: Current level = ...` lines followed by
 `ALL BASIC DVFS TESTS PASSED`, finishing at 510 ns.
 
-### Option B — XSim command line, no project
+### Option B — Vivado batch mode
+
+From the `simulation/` directory:
+
+```bash
+vivado -mode batch -source run_sim.tcl
+```
+
+This builds a throwaway project under `simulation/work/` (git-ignored) and runs
+the testbench to completion.
+
+### Option C — XSim command line, no project
 
 With Vivado's `bin` directory on `PATH`, from `P3_DVFS_Controller/`:
 
@@ -283,7 +295,10 @@ P3_DVFS_Controller/
 ├── tb/
 │   └── p3_dvfs_tb.v              # Testbench with P1/P4 models
 ├── simulation/
-│   └── dvfs_waveform.png         # Behavioral simulation waveform
+│   ├── dvfs_waveform.png         # Behavioral simulation waveform
+│   ├── run_sim.tcl               # Vivado batch-mode runner
+│   ├── run_xsim.sh               # Command-line XSim flow
+│   └── sim_console_output.txt    # Captured simulation transcript
 ├── docs/
 │   └── interface_assumptions.md  # Provisional P1/P4 interface, open questions
 └── README.md

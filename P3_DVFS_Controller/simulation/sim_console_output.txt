@@ -1,0 +1,50 @@
+Behavioral simulation transcript - p3_dvfs_tb
+Simulator : AMD Vivado Simulator (XSim) v2026.1
+Captured  : 2026-10-28  (absolute paths shortened for publication)
+Command   : xvlog / xelab / xsim  (see run_xsim.sh)
+============================================================
+
+--- xelab (elaboration) ---
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: <VIVADO_INSTALL>/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top p3_dvfs_tb -snapshot p3_dvfs_tb_sim -log xelab.log 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4328] File: <BLOCK>/tb/p3_dvfs_tb.v Line: 144 : Sensitivity on input argument "new_level" of task "run_change" may never get triggered.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p3_dvfs_controller
+Compiling module work.p3_dvfs_tb
+Built simulation snapshot p3_dvfs_tb_sim
+
+--- xsim (run -all) ---
+source xsim.dir/p3_dvfs_tb_sim/xsim_script.tcl
+# xsim {p3_dvfs_tb_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Time 40000: Request level 10
+Voltage requested first
+Frequency requested second
+PASS: Current level = 10
+Time 160000: Request level 00
+Frequency requested first
+Voltage requested second
+PASS: Current level = 00
+Time 280000: Request level 01
+Voltage requested first
+Frequency requested second
+PASS: Current level = 01
+Time 400000: Request level 10
+Voltage requested first
+Frequency requested second
+PASS: Current level = 10
+==========================
+ALL BASIC DVFS TESTS PASSED
+==========================
+$finish called at time : 510 ns : File "<BLOCK>/tb/p3_dvfs_tb.v" Line 178
+exit
+INFO: [Common 17-206] Exiting xsim at Wed Oct 28 22:24:09 2026...

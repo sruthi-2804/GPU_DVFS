@@ -1,0 +1,65 @@
+# ---------------------------------------------------------------------------
+# Vivado / XSim generated output
+# ---------------------------------------------------------------------------
+
+# Project directories
+*.xpr
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.gen/
+*.runs/
+*.srcs/
+*.hbs/
+*.str
+.Xil/
+
+# Throwaway project created by simulation/run_sim.tcl
+**/simulation/work/
+
+# XSim compiled libraries and snapshots
+xsim.dir/
+*.wdb
+*.pb
+*.jou
+*.str
+*.vcd
+*.saif
+
+# XSim generated scripts and project files
+compile.bat
+elaborate.bat
+simulate.bat
+compile.sh
+elaborate.sh
+simulate.sh
+*_vlog.prj
+*_vhdl.prj
+xsim.ini
+glbl.v
+webtalk*/
+
+# Logs
+*.log
+vivado*.backup.jou
+vivado*.backup.log
+hs_err_pid*.log
+
+# Synthesis / implementation output
+*.dcp
+*.bit
+*.bin
+*.ltx
+*.rpt
+*.mmi
+usage_statistics_webtalk*
+
+# Editor / OS noise
+.vscode/
+.idea/
+*.swp
+*~
+Thumbs.db
+desktop.ini
+.DS_Store

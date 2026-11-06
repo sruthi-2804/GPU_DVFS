@@ -388,7 +388,10 @@ P3_DVFS_Controller/
 │   ├── sim_console_output.txt        # Controller simulation transcript
 │   └── persistence_sim_output.txt    # Persistence counter transcript
 ├── docs/
-│   └── interface_assumptions.md      # Provisional P1/P4 interface, open questions
+│   ├── interface_assumptions.md      # Provisional P1/P4 interface, open questions
+│   ├── hysteresis_architecture.md    # Proposed hysteresis thresholds, open questions
+│   └── waveforms/
+│       └── README.md                 # Waveform capture specification
 └── README.md
 ```
 
@@ -400,17 +403,31 @@ Controller FSM complete; behavioral simulation passes the directed tests in
 section 6. Workload persistence counter complete and verified standalone
 (section 7).
 
-A utilization-based hysteresis layer is planned, using direct LOW to HIGH and
-HIGH to LOW transitions with no intermediate step. The utilization thresholds
-and epoch length are **not yet decided**, and no RTL exists for it — the source
-file is still an empty stub and is deliberately not tracked here.
+The P3 DVFS controller supports LOW, MEDIUM, and HIGH performance levels.
+Utilization-based hysteresis selects the recommended level using configurable
+thresholds. Direct LOW-to-HIGH and HIGH-to-LOW transitions are supported when
+their respective thresholds are met; otherwise, transitions may occur between
+adjacent levels. Direct transitions do not require passing through MEDIUM.
+
+The thresholds are **provisional** and are recorded in
+[`docs/hysteresis_architecture.md`](docs/hysteresis_architecture.md). They are
+proposed, not agreed and **not implemented** — no RTL exists for the hysteresis
+layer, and the source file is still an empty stub that is deliberately not
+tracked here.
+
+Whichever level hysteresis recommends, the controller FSM remains responsible
+for carrying out the change, and its sequencing requirements are unchanged:
+voltage before frequency on an upshift, frequency before voltage on a downshift
+(section 4). This applies to direct LOW/HIGH transitions exactly as it does to
+adjacent-level ones.
 
 Planned:
 
 - Connect the persistence counter to the controller FSM.
-- Define the hysteresis thresholds and epoch length with the P2 owner, then
-  implement `p3_hysteresis_controller`.
-- Capture waveform screenshots for the persistence counter.
+- Confirm the proposed hysteresis thresholds and the `EPOCH_LENGTH = 1000`
+  assumption with the P2 owner, then implement `p3_hysteresis_controller`.
+- Capture the four persistence-counter waveforms specified in
+  [`docs/waveforms/README.md`](docs/waveforms/README.md).
 - Extend the testbenches to cover the gaps in sections 6 and 7, including
   `PERSIST_THRESHOLD` values other than 3.
 - Resolve the open items in

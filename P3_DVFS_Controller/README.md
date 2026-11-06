@@ -296,6 +296,8 @@ module p3_persistence_counter #(
 `tb/tb_p3_persistence_counter.v`, `PERSIST_THRESHOLD = 3`. Seven test groups,
 26 assertions, zero errors. Full transcript:
 [`simulation/persistence_sim_output.txt`](simulation/persistence_sim_output.txt).
+Waveform captures: [`docs/waveforms/README.md`](docs/waveforms/README.md)
+section 1.
 
 | Test | Covers |
 |------|--------|
@@ -314,7 +316,6 @@ The run ends `ALL TESTS PASSED` at 661 ns. Not yet covered:
 - **Only `PERSIST_THRESHOLD = 3` is exercised.** The RTL has a dedicated
   `PERSIST_THRESHOLD == 1` path that no test instantiates.
 - Integration with the controller FSM — the two modules are not connected.
-- Waveform screenshots for this module have not been captured yet.
 - `class_valid` asserted for more than one cycle per epoch.
 - Behaviour when `workload_class` changes while `class_valid` is low.
 
@@ -377,10 +378,12 @@ xsim p3_dvfs_tb_sim -runall
 P3_DVFS_Controller/
 ├── rtl/
 │   ├── p3_dvfs_controller.v          # Five-state DVFS controller FSM
-│   └── p3_persistence_counter.v      # Workload persistence filter
+│   ├── p3_persistence_counter.v      # Workload persistence filter
+│   └── p3_hysteresis_controller.v    # Utilization to level selection
 ├── tb/
 │   ├── p3_dvfs_tb.v                  # Controller testbench with P1/P4 models
-│   └── tb_p3_persistence_counter.v   # Persistence counter testbench
+│   ├── tb_p3_persistence_counter.v   # Persistence counter testbench
+│   └── tb_p3_hysteresis_controller.v # Hysteresis directed tests
 ├── simulation/
 │   ├── dvfs_waveform.png             # Controller simulation waveform
 │   ├── run_sim.tcl                   # Vivado batch-mode runner
@@ -391,7 +394,11 @@ P3_DVFS_Controller/
 │   ├── interface_assumptions.md      # Provisional P1/P4 interface, open questions
 │   ├── hysteresis_architecture.md    # Proposed hysteresis thresholds, open questions
 │   └── waveforms/
-│       └── README.md                 # Waveform capture specification
+│       ├── README.md                 # Waveform evidence, described below
+│       ├── p3_persistence_counter_waveform.png
+│       ├── p3_persistence_extended_tests.png
+│       ├── p3_hysteresis_console_test.png
+│       └── p3_hysteresis_waveform.png
 └── README.md
 ```
 
@@ -409,11 +416,17 @@ thresholds. Direct LOW-to-HIGH and HIGH-to-LOW transitions are supported when
 their respective thresholds are met; otherwise, transitions may occur between
 adjacent levels. Direct transitions do not require passing through MEDIUM.
 
-The thresholds are **provisional** and are recorded in
-[`docs/hysteresis_architecture.md`](docs/hysteresis_architecture.md). They are
-proposed, not agreed and **not implemented** — no RTL exists for the hysteresis
-layer, and the source file is still an empty stub that is deliberately not
-tracked here.
+`rtl/p3_hysteresis_controller.v` implements that level selection as a
+combinational block and passes 17 of 17 directed checks standalone — see
+[`docs/waveforms/README.md`](docs/waveforms/README.md) section 2.
+
+The thresholds are **provisional**: proposed by P3, hard-coded in the RTL, not
+validated against any workload and not agreed with P2. They are recorded in
+[`docs/hysteresis_architecture.md`](docs/hysteresis_architecture.md).
+
+**The three blocks are not integrated.** The controller FSM, the persistence
+counter and the hysteresis logic have each been simulated only against their own
+testbench. Nothing wires them together, and no integrated simulation exists.
 
 Whichever level hysteresis recommends, the controller FSM remains responsible
 for carrying out the change, and its sequencing requirements are unchanged:
@@ -426,8 +439,11 @@ Planned:
 - Connect the persistence counter to the controller FSM.
 - Confirm the proposed hysteresis thresholds and the `EPOCH_LENGTH = 1000`
   assumption with the P2 owner, then implement `p3_hysteresis_controller`.
-- Capture the four persistence-counter waveforms specified in
-  [`docs/waveforms/README.md`](docs/waveforms/README.md).
+- Wire the hysteresis logic and the persistence counter to the FSM and build an
+  integrated testbench; until then the 17/17 result covers the hysteresis block
+  alone.
+- Expose the six hysteresis thresholds as module parameters instead of
+  hard-coded literals.
 - Extend the testbenches to cover the gaps in sections 6 and 7, including
   `PERSIST_THRESHOLD` values other than 3.
 - Resolve the open items in

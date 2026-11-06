@@ -1,12 +1,17 @@
 # P3 — Provisional hysteresis architecture
 
-> **Status: proposed. Not implemented, not simulated, not verified.**
-> No RTL exists for this layer. `p3_hysteresis_controller.v` is currently an
-> empty module stub and is not tracked in this repository.
+> **Status: thresholds still proposed. Level-selection RTL now exists.**
+> `rtl/p3_hysteresis_controller.v` implements the level-selection table in
+> section 3 as combinational logic and passes 17 of 17 directed checks in
+> behavioral simulation — see
+> [`waveforms/README.md`](waveforms/README.md) section 2. It is a **standalone
+> module**: it is not wired to the controller FSM or to the persistence
+> counter, and no integrated simulation has been run.
 >
-> Every threshold below is a **proposed P3 design parameter**, chosen by the P3
-> owner as a starting point. None has been validated against a workload, and
-> none has been agreed with the P2 owner.
+> Every threshold below is still a **proposed P3 design parameter**, chosen by
+> the P3 owner as a starting point. None has been validated against a workload,
+> and none has been agreed with the P2 owner. They are currently hard-coded in
+> the RTL rather than exposed as module parameters.
 
 ---
 
@@ -80,8 +85,9 @@ adjacent levels through MEDIUM in the usual way.
 **Open — rule precedence.** The direct and single-step conditions overlap. At
 10% utilization in HIGH, both *HIGH → LOW* (≤ 15%) and *HIGH → MEDIUM* (≤ 55%)
 are satisfied. The proposed resolution is to **evaluate the direct condition
-first and prefer the larger jump**, so 10% goes straight to LOW. This has not
-been decided and is not implemented.
+first and prefer the larger jump**, so 10% goes straight to LOW. The current RTL
+implements that ordering, and the directed test at util = 10 in HIGH confirms
+it, but the rule itself is still **undecided** and not agreed.
 
 ---
 
@@ -145,8 +151,11 @@ cut reaction latency. No analysis has been done.
 | 3 | Numerical format of the utilization output (width, fixed-point or percentage integer) | Pending confirmation | P2 |
 | 4 | Valid-signal timing for the utilization output | Pending confirmation | P2 |
 | 5 | Final P2 to P3 interface | Pending confirmation | P2, P3 |
-| 6 | Direct-transition rule precedence (section 4) | Proposed, undecided | P3 |
+| 6 | Direct-transition rule precedence (section 4) | Implemented as proposed; rule still undecided | P3 |
 | 7 | Whether hysteresis and persistence are both required (section 7) | Open | P3 |
 | 8 | Back-pressure while an FSM transition is in flight | Open | P2, P3 |
 
-None of the above is implemented. This document records intent only.
+The level-selection table in section 3 is implemented and verified standalone.
+Everything else above — the threshold values themselves, the composition with
+persistence, the back-pressure and the P2 interface — remains open. This
+document records intent, not agreement.

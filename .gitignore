@@ -63,3 +63,7 @@ usage_statistics_webtalk*
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Working screenshot folder (originals; selected copies live in
+# P3_DVFS_Controller/docs/waveforms/)
+/OUTPUTS/

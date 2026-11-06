@@ -246,7 +246,92 @@ which is the operand that actually moves during the wait.
 
 ---
 
-## 7. Running the testbench in Vivado
+## 7. Workload persistence counter
+
+`rtl/p3_persistence_counter.v` is a **separate module and is not yet wired to the
+FSM**. It exists to filter transient workload classifications so that the
+controller only acts on sustained changes, rather than oscillating on noise.
+
+```verilog
+module p3_persistence_counter #(
+    parameter integer PERSIST_THRESHOLD = 3
+)(
+    input  wire       clk,
+    input  wire       rst_n,
+    input  wire       class_valid,
+    input  wire [1:0] workload_class,
+    output reg  [1:0] stable_class,
+    output reg        stable_valid
+);
+```
+
+| Signal | Width | Direction | Description |
+|--------|-------|-----------|-------------|
+| `class_valid` | 1 | input | One-epoch strobe. A classification is sampled only while this is high. |
+| `workload_class` | 2 | input | Classification for this epoch, same encoding as section 2. |
+| `stable_class` | 2 | output | Last classification that met the persistence threshold. |
+| `stable_valid` | 1 | output | High once any class has met the threshold. |
+
+### Behaviour
+
+- Counts **consecutive** `class_valid` epochs carrying the same
+  `workload_class`. On reaching `PERSIST_THRESHOLD` (default 3), it publishes
+  that class on `stable_class` and raises `stable_valid`.
+- A different class restarts the streak at 1. The previously published
+  `stable_class` is held until the new class meets the threshold in its own
+  right, so the output never follows a single transient epoch.
+- `workload_class == 2'b11` is rejected: the streak is cleared and
+  `have_last_class` is dropped, matching the FSM's treatment of the reserved
+  encoding.
+- The counter **saturates** at `PERSIST_THRESHOLD` rather than wrapping.
+- Nothing advances while `class_valid` is low; the counter holds its value.
+- `stable_valid` is **sticky**. Once raised it is cleared only by `rst_n`.
+  Consumers should treat it as "a stable class has been established at some
+  point", not as a per-epoch strobe.
+
+`rst_n` is asynchronous and active-low, as in the controller.
+
+### Verification
+
+`tb/tb_p3_persistence_counter.v`, `PERSIST_THRESHOLD = 3`. Seven test groups,
+26 assertions, zero errors. Full transcript:
+[`simulation/persistence_sim_output.txt`](simulation/persistence_sim_output.txt).
+
+| Test | Covers |
+|------|--------|
+| 1 | Three consecutive HIGH epochs raise `stable_valid` only on the third |
+| 2 | Class change to LOW; old `stable_class` held until the new threshold is met |
+| 3 | Reset clears the counter and the outputs |
+| 4 | Counter saturates at the threshold (probes `dut.persist_count`) |
+| 5 | A LOW epoch interrupting a HIGH streak forces a restart |
+| 6 | Reserved class `2'b11` clears the streak |
+| 7 | No counting while `class_valid` is low (probes `dut.persist_count`) |
+
+### What this does and does not establish
+
+The run ends `ALL TESTS PASSED` at 661 ns. Not yet covered:
+
+- **Only `PERSIST_THRESHOLD = 3` is exercised.** The RTL has a dedicated
+  `PERSIST_THRESHOLD == 1` path that no test instantiates.
+- Integration with the controller FSM — the two modules are not connected.
+- Waveform screenshots for this module have not been captured yet.
+- `class_valid` asserted for more than one cycle per epoch.
+- Behaviour when `workload_class` changes while `class_valid` is low.
+
+Test 4's saturation probe increments the error count without printing its own
+line, so it is reported only through the final `ALL TESTS PASSED`. Test 5's
+checks all expect the reset-state outputs, so they confirm that no premature
+assertion occurs but do not by themselves distinguish a restarted streak from a
+stalled counter; tests 6 and 7 probe `persist_count` directly and cover that.
+
+### Language note
+
+This module uses `$clog2`, which is Verilog-2005 rather than Verilog-2001. XSim
+accepts it. Confirm the team's target toolchain does too before synthesis.
+
+---
+
+## 8. Running the testbench in Vivado
 
 ### Option A — Vivado GUI
 
@@ -286,33 +371,48 @@ xsim p3_dvfs_tb_sim -runall
 
 ---
 
-## 8. Directory layout
+## 9. Directory layout
 
 ```
 P3_DVFS_Controller/
 ├── rtl/
-│   └── p3_dvfs_controller.v      # Five-state DVFS controller FSM
+│   ├── p3_dvfs_controller.v          # Five-state DVFS controller FSM
+│   └── p3_persistence_counter.v      # Workload persistence filter
 ├── tb/
-│   └── p3_dvfs_tb.v              # Testbench with P1/P4 models
+│   ├── p3_dvfs_tb.v                  # Controller testbench with P1/P4 models
+│   └── tb_p3_persistence_counter.v   # Persistence counter testbench
 ├── simulation/
-│   ├── dvfs_waveform.png         # Behavioral simulation waveform
-│   ├── run_sim.tcl               # Vivado batch-mode runner
-│   ├── run_xsim.sh               # Command-line XSim flow
-│   └── sim_console_output.txt    # Captured simulation transcript
+│   ├── dvfs_waveform.png             # Controller simulation waveform
+│   ├── run_sim.tcl                   # Vivado batch-mode runner
+│   ├── run_xsim.sh                   # Command-line XSim flow
+│   ├── sim_console_output.txt        # Controller simulation transcript
+│   └── persistence_sim_output.txt    # Persistence counter transcript
 ├── docs/
-│   └── interface_assumptions.md  # Provisional P1/P4 interface, open questions
+│   └── interface_assumptions.md      # Provisional P1/P4 interface, open questions
 └── README.md
 ```
 
 ---
 
-## 9. Status and next steps
+## 10. Status and next steps
 
-RTL complete. Behavioral simulation passes the directed tests above.
+Controller FSM complete; behavioral simulation passes the directed tests in
+section 6. Workload persistence counter complete and verified standalone
+(section 7).
+
+A utilization-based hysteresis layer is planned, using direct LOW to HIGH and
+HIGH to LOW transitions with no intermediate step. The utilization thresholds
+and epoch length are **not yet decided**, and no RTL exists for it — the source
+file is still an empty stub and is deliberately not tracked here.
 
 Planned:
 
-- Extend the testbench to cover the gaps in section 6.
+- Connect the persistence counter to the controller FSM.
+- Define the hysteresis thresholds and epoch length with the P2 owner, then
+  implement `p3_hysteresis_controller`.
+- Capture waveform screenshots for the persistence counter.
+- Extend the testbenches to cover the gaps in sections 6 and 7, including
+  `PERSIST_THRESHOLD` values other than 3.
 - Resolve the open items in
   [`docs/interface_assumptions.md`](docs/interface_assumptions.md) with the P1,
   P2 and P4 owners — particularly whether `pll_done` and `volt_done` need

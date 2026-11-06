@@ -1,0 +1,64 @@
+Behavioral simulation transcript - tb_p3_persistence_counter
+Simulator : AMD Vivado Simulator (XSim) v2026.1
+Captured  : 2026-11-06  (absolute paths shortened for publication)
+Command   : launch_simulation  (Vivado project flow)
+============================================================
+
+--- xvlog (compilation) ---
+INFO: [VRFC 10-2263] Analyzing Verilog file "<BLOCK>/rtl/p3_persistence_counter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module p3_persistence_counter
+INFO: [VRFC 10-2263] Analyzing Verilog file "<BLOCK>/tb/tb_p3_persistence_counter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_p3_persistence_counter
+
+--- xelab (elaboration) ---
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: <VIVADO_INSTALL>/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_p3_persistence_counter_behav xil_defaultlib.tb_p3_persistence_counter xil_defaultlib.glbl -log elaborate.log 
+INFO: [XSIM 43-3493] Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.p3_persistence_counter_default
+Compiling module xil_defaultlib.tb_p3_persistence_counter
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_p3_persistence_counter_behav
+
+--- xsim (run -all) ---
+Time resolution is 1 ps
+PASS: class=00 valid=0
+TEST 1: Stable HIGH
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=10 valid=1
+TEST 2: Change to LOW
+PASS: class=10 valid=1
+PASS: class=10 valid=1
+PASS: class=00 valid=1
+TEST 3: Reset
+PASS: class=00 valid=0
+TEST 4: Saturation
+PASS: class=10 valid=1
+TEST 5: Interrupted HIGH sequence
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+TEST 6: Invalid workload class
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=00 valid=0
+PASS: class=10 valid=1
+TEST 7: class_valid gating
+PASS: class=00 valid=0
+PASS: Counter held at 1
+PASS: class=00 valid=0
+PASS: class=10 valid=1
+PASS: class=10 valid=1
+ALL TESTS PASSED
+$finish called at time : 661 ns : File "<BLOCK>/tb/tb_p3_persistence_counter.v" Line 216

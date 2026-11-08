@@ -1,0 +1,88 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/rtl/p1_pll_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module p1_pll_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_p1_pll_controller
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: E:/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top tb_p1_pll_controller -snapshot tb_p1_pll_sim 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p1_pll_controller(LOCK_TIMEOUT=3...
+Compiling module work.tb_p1_pll_controller
+Built simulation snapshot tb_p1_pll_sim
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sun Nov  8 14:29:16 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_p1_pll_sim/xsim_script.tcl
+# xsim {tb_p1_pll_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+=== P1 PLL CONTROLLER TEST START ===
+PASS: reset: pll_busy low
+PASS: reset: pll_done low
+PASS: reset: freq_ack low
+PASS: reset: pll_error low
+PASS: reset: clock_valid low
+PASS: reset: current_freq_sel LOW
+PASS: reset: pll_freq_code LOW
+PASS: bring-up: pll_locked high
+PASS: bring-up: reports LOW
+PASS: bring-up: no freq_ack (0)
+PASS: bring-up: pll_error low
+PASS: LOW to HIGH: one freq_ack (1)
+PASS: LOW to HIGH: reports HIGH
+PASS: LOW to HIGH: code is HIGH
+PASS: LOW to HIGH: clock_valid
+PASS: LOW to HIGH: reconfigured
+PASS: LOW to HIGH: pll_busy low
+PASS: LOW to HIGH: no error
+PASS: same state: one freq_ack (1)
+PASS: same state: no reconfigure
+PASS: same state: still HIGH
+PASS: same state: clock_valid held
+PASS: invalid: no freq_ack (0)
+PASS: invalid: no reconfigure
+PASS: invalid: pll_error set
+PASS: invalid: clock still valid
+PASS: invalid: level unchanged
+PASS: sticky: error cleared
+PASS: timeout: no freq_ack (0)
+PASS: timeout: pll_error set
+PASS: timeout: clock_valid low
+PASS: timeout: level not committed
+PASS: timeout: pll_busy low
+PASS: retry: one freq_ack (1)
+PASS: retry: reports MEDIUM
+PASS: retry: clock_valid
+PASS: retry: no new error
+PASS: mid-reset: busy before reset
+PASS: mid-reset: pll_busy low
+PASS: mid-reset: pll_done low
+PASS: mid-reset: clock_valid low
+PASS: mid-reset: pll_error low
+PASS: mid-reset: reports LOW
+PASS: mid-reset: no freq_ack (0)
+PASS: lock loss: clock_valid low
+PASS: lock loss: pll_error set
+PASS: lock loss: recovered
+PASS: lock loss: level unchanged
+PASS: lock loss: no freq_ack (0)
+==========================
+PASS = 49  FAIL = 0
+ALL P1 CONTROLLER TESTS PASSED
+==========================
+$finish called at time : 1380 ns : File "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_controller.v" Line 346
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 14:29:18 2026...

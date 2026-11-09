@@ -379,11 +379,13 @@ P3_DVFS_Controller/
 ├── rtl/
 │   ├── p3_dvfs_controller.v          # Five-state DVFS controller FSM
 │   ├── p3_persistence_counter.v      # Workload persistence filter
-│   └── p3_hysteresis_controller.v    # Utilization to level selection
+│   ├── p3_hysteresis_controller.v    # Utilization to level selection
+│   └── p3_adaptive_residency.v       # Minimum dwell time between transitions
 ├── tb/
 │   ├── p3_dvfs_tb.v                  # Controller testbench with P1/P4 models
 │   ├── tb_p3_persistence_counter.v   # Persistence counter testbench
-│   └── tb_p3_hysteresis_controller.v # Hysteresis directed tests
+│   ├── tb_p3_hysteresis_controller.v # Hysteresis directed tests
+│   └── tb_p3_adaptive_residency.v    # Residency timer directed tests
 ├── simulation/
 │   ├── dvfs_waveform.png             # Controller simulation waveform
 │   ├── run_sim.tcl                   # Vivado batch-mode runner
@@ -398,7 +400,8 @@ P3_DVFS_Controller/
 │       ├── p3_persistence_counter_waveform.png
 │       ├── p3_persistence_extended_tests.png
 │       ├── p3_hysteresis_console_test.png
-│       └── p3_hysteresis_waveform.png
+│       ├── p3_hysteresis_waveform.png
+│       └── p3_adaptive_residency_26_tests_passed.png
 └── README.md
 ```
 
@@ -424,9 +427,20 @@ The thresholds are **provisional**: proposed by P3, hard-coded in the RTL, not
 validated against any workload and not agreed with P2. They are recorded in
 [`docs/hysteresis_architecture.md`](docs/hysteresis_architecture.md).
 
-**The three blocks are not integrated.** The controller FSM, the persistence
-counter and the hysteresis logic have each been simulated only against their own
-testbench. Nothing wires them together, and no integrated simulation exists.
+`rtl/p3_adaptive_residency.v` adds an adaptive minimum-dwell timer: after a
+completed transition it blocks the next one for 2, 4 or 8 cycles depending on
+`urgent_change` and `frequent_switching`, with `frequent_switching` taking
+priority. It passes 26 of 26 directed checks across Tests 1-11 with 0 errors --
+see [`docs/waveforms/README.md`](docs/waveforms/README.md) section 3. Its three
+cycle counts are **placeholders**, not values derived from PLL or regulator
+timing.
+
+**The four blocks are not integrated.** The controller FSM, the persistence
+counter, the hysteresis logic and the residency timer have each been simulated
+only against their own testbench. Nothing wires them together, and no integrated
+simulation exists. In particular nothing consumes `residency_done`, and
+`transition_done`, `urgent_change` and `frequent_switching` are driven only by
+the testbench.
 
 Whichever level hysteresis recommends, the controller FSM remains responsible
 for carrying out the change, and its sequencing requirements are unchanged:
@@ -439,9 +453,12 @@ Planned:
 - Connect the persistence counter to the controller FSM.
 - Confirm the proposed hysteresis thresholds and the `EPOCH_LENGTH = 1000`
   assumption with the P2 owner, then implement `p3_hysteresis_controller`.
-- Wire the hysteresis logic and the persistence counter to the FSM and build an
-  integrated testbench; until then the 17/17 result covers the hysteresis block
-  alone.
+- Wire the hysteresis logic, the persistence counter and the residency timer to
+  the FSM and build an integrated testbench; until then each standalone result
+  covers only its own block.
+- Derive the residency cycle counts from P1 relock time and P4 settling time
+  instead of the current placeholders, and decide what drives `urgent_change`
+  and `frequent_switching`.
 - Expose the six hysteresis thresholds as module parameters instead of
   hard-coded literals.
 - Extend the testbenches to cover the gaps in sections 6 and 7, including

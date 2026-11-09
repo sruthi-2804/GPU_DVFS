@@ -68,7 +68,61 @@ consistently. They do **not** confirm that these are the right numbers.
 
 ---
 
-## 3. Controller FSM — `p3_dvfs_controller.v`
+## 3. Adaptive residency timer -- `p3_adaptive_residency.v`
+
+Testbench: [`../../tb/tb_p3_adaptive_residency.v`](../../tb/tb_p3_adaptive_residency.v).
+Clock period 10 ns. Parameters `SHORT_CYCLES = 2`, `NORMAL_CYCLES = 4`,
+`LONG_CYCLES = 8`, `COUNT_WIDTH = 4`.
+
+| File | What it shows | Verification purpose |
+|------|---------------|----------------------|
+| `p3_adaptive_residency_26_tests_passed.png` | Wave view with `clk`, `rst_n`, `transition_done`, `urgent_change`, `frequent_switching`, `residency_done`, `errors[31:0]` and `tests[31:0]` over the full run. | **`tests = 26`, `errors = 0`** at the end of the run. `residency_done` drops on each `transition_done` pulse and rises again only after the selected residency limit has elapsed; the mid-run `rst_n` dip shows the asynchronous reset releasing the block immediately. |
+
+### Recorded result
+
+**26 checks, 26 passed, 0 errors**, across Tests 1-11.
+
+The `tests` counter is incremented by `check_done()` only, which is called 26
+times. The testbench performs **five further assertions** that increment
+`errors` without incrementing `tests` -- counter saturation at 8 (Test 6),
+reset clearing `residency_count` and `residency_limit` (Test 8), the stored
+limit staying at 4 when urgency changes mid-residency (Test 9), consecutive
+completion-pulse handling (Test 10), and SHORT-limit saturation (Test 11). All
+five pass, so `errors` reads 0. Read the screenshot as **26 `residency_done`
+checks plus 5 internal-state probes, none failing** -- not as 26 total
+assertions.
+
+Coverage of Tests 1-11:
+
+| Test | Covers |
+|------|--------|
+| 1 | Reset state -- `residency_done` high out of reset |
+| 2 | NORMAL residency = 4 cycles |
+| 3 | SHORT residency = 2 cycles, selected by `urgent_change` |
+| 4 | LONG residency = 8 cycles, selected by `frequent_switching` |
+| 5 | `frequent_switching` takes priority over `urgent_change` |
+| 6 | Counter saturates at the limit rather than wrapping |
+| 7 | A new `transition_done` restarts the residency period |
+| 8 | Asynchronous reset mid-residency clears both registers |
+| 9 | Limit is latched at `transition_done`; later urgency changes do not alter it |
+| 10 | Back-to-back `transition_done` pulses re-latch the new limit |
+| 11 | `residency_done` stays high once the limit is reached |
+
+### Residency durations are provisional
+
+`SHORT_CYCLES = 2`, `NORMAL_CYCLES = 4` and `LONG_CYCLES = 8` are **placeholder
+values chosen to make the directed tests short and readable**. They are not
+derived from PLL relock time, regulator settling time or any measured switching
+cost, and they have not been agreed with the P1 or P4 owners. The tests confirm
+the timer counts correctly to whatever limit it is given; they say nothing
+about whether these are the right limits.
+
+The `frequent_switching` and `urgent_change` inputs are currently **driven only
+by the testbench**. Nothing in the design generates them yet.
+
+---
+
+## 4. Controller FSM -- `p3_dvfs_controller.v`
 
 The FSM voltage/PLL sequencing waveform is already in the repository at
 [`../../simulation/dvfs_waveform.png`](../../simulation/dvfs_waveform.png).
@@ -78,16 +132,19 @@ committing a duplicate.
 
 ---
 
-## 4. Scope and limits
+## 5. Scope and limits
 
 - Behavioral (functional) simulation only. No timing, synthesis, or gate-level
   verification. No hardware run.
 - Directed vectors only. No constrained-random stimulus, no coverage model, no
   assertions.
-- **The persistence counter, the hysteresis logic and the controller FSM were
-  each simulated on their own, against their own testbench. They are not wired
-  together. No integrated simulation of the three has been run, and this
-  checkpoint is not evidence that they work together.**
+- **The persistence counter, the hysteresis logic, the adaptive residency timer
+  and the controller FSM were each simulated on their own, against their own
+  testbench. They are not wired together. No integrated simulation has been
+  run, and this checkpoint is not evidence that they work together.**
+- The residency timer has no connection to the FSM: nothing currently consumes
+  `residency_done`, and nothing drives `transition_done`, `urgent_change` or
+  `frequent_switching` outside the testbench.
 - Section 7 of [`../../README.md`](../../README.md) lists what remains
   uncovered for this block.
 

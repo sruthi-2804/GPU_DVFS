@@ -1,0 +1,618 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P3_DVFS_Controller/rtl/p3_dvfs_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module p3_dvfs_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/rtl/p1_pll_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module p1_pll_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/rtl/p1_pll_transition_cost.v" into library work
+INFO: [VRFC 10-311] analyzing module p1_pll_transition_cost
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/rtl/p1_pll_behavioral.v" into library work
+INFO: [VRFC 10-311] analyzing module p1_pll_behavioral
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/rtl/p1_pll_top.v" into library work
+INFO: [VRFC 10-311] analyzing module p1_pll_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_controller.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_p1_pll_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_transition_cost.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_p1_pll_transition_cost
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_behavioral.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_p1_pll_behavioral
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_top.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_p1_pll_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_p3_integration.v" into library work
+INFO: [VRFC 10-311] analyzing module tb_p1_p3_integration
+======================================================
+=== tb_p1_pll_controller
+======================================================
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: E:/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top tb_p1_pll_controller -snapshot tb_p1_pll_controller_sim 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p1_pll_controller(LOCK_TIMEOUT=3...
+Compiling module work.tb_p1_pll_controller
+Built simulation snapshot tb_p1_pll_controller_sim
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sun Nov  8 14:56:46 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_p1_pll_controller_sim/xsim_script.tcl
+# xsim {tb_p1_pll_controller_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+=== P1 PLL CONTROLLER TEST START ===
+PASS: reset: pll_busy low
+PASS: reset: pll_done low
+PASS: reset: freq_ack low
+PASS: reset: pll_error low
+PASS: reset: clock_valid low
+PASS: reset: current_freq_sel LOW
+PASS: reset: pll_freq_code LOW
+PASS: bring-up: pll_locked high
+PASS: bring-up: reports LOW
+PASS: bring-up: no freq_ack (0)
+PASS: bring-up: pll_error low
+PASS: LOW to HIGH: one freq_ack (1)
+PASS: LOW to HIGH: reports HIGH
+PASS: LOW to HIGH: code is HIGH
+PASS: LOW to HIGH: clock_valid
+PASS: LOW to HIGH: reconfigured
+PASS: LOW to HIGH: pll_busy low
+PASS: LOW to HIGH: no error
+PASS: same state: one freq_ack (1)
+PASS: same state: no reconfigure
+PASS: same state: still HIGH
+PASS: same state: clock_valid held
+PASS: invalid: no freq_ack (0)
+PASS: invalid: no reconfigure
+PASS: invalid: pll_error set
+PASS: invalid: clock still valid
+PASS: invalid: level unchanged
+PASS: sticky: error cleared
+PASS: timeout: no freq_ack (0)
+PASS: timeout: pll_error set
+PASS: timeout: clock_valid low
+PASS: timeout: level not committed
+PASS: timeout: pll_busy low
+PASS: retry: one freq_ack (1)
+PASS: retry: reports MEDIUM
+PASS: retry: clock_valid
+PASS: retry: no new error
+PASS: mid-reset: busy before reset
+PASS: mid-reset: pll_busy low
+PASS: mid-reset: pll_done low
+PASS: mid-reset: clock_valid low
+PASS: mid-reset: pll_error low
+PASS: mid-reset: reports LOW
+PASS: mid-reset: no freq_ack (0)
+PASS: lock loss: clock_valid low
+PASS: lock loss: pll_error set
+PASS: lock loss: recovered
+PASS: lock loss: level unchanged
+PASS: lock loss: no freq_ack (0)
+==========================
+PASS = 49  FAIL = 0
+ALL P1 CONTROLLER TESTS PASSED
+==========================
+$finish called at time : 1380 ns : File "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_controller.v" Line 346
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 14:56:48 2026...
+======================================================
+=== tb_p1_pll_transition_cost
+======================================================
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: E:/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top tb_p1_pll_transition_cost -snapshot tb_p1_pll_transition_cost_sim 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p1_pll_transition_cost_default
+Compiling module work.p1_pll_transition_cost(SETTLE_LO...
+Compiling module work.tb_p1_pll_transition_cost
+Built simulation snapshot tb_p1_pll_transition_cost_sim
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sun Nov  8 14:56:52 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_p1_pll_transition_cost_sim/xsim_script.tcl
+# xsim {tb_p1_pll_transition_cost_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+=== P1 TRANSITION COST TEST START ===
+PASS: LOW -> LOW ps (0)
+PASS: LOW -> LOW cycles (0)
+PASS: LOW -> LOW valid
+PASS: LOW -> LOW energy (0)
+PASS: LOW -> MEDIUM ps (100000)
+PASS: LOW -> MEDIUM cycles (10)
+PASS: LOW -> MEDIUM valid
+PASS: LOW -> MEDIUM energy (0)
+PASS: LOW -> HIGH ps (180000)
+PASS: LOW -> HIGH cycles (18)
+PASS: LOW -> HIGH valid
+PASS: LOW -> HIGH energy (0)
+PASS: MEDIUM -> LOW ps (80000)
+PASS: MEDIUM -> LOW cycles (8)
+PASS: MEDIUM -> LOW valid
+PASS: MEDIUM -> LOW energy (0)
+PASS: MEDIUM -> MEDIUM ps (0)
+PASS: MEDIUM -> MEDIUM cycles (0)
+PASS: MEDIUM -> MEDIUM valid
+PASS: MEDIUM -> MEDIUM energy (0)
+PASS: MEDIUM -> HIGH ps (120000)
+PASS: MEDIUM -> HIGH cycles (12)
+PASS: MEDIUM -> HIGH valid
+PASS: MEDIUM -> HIGH energy (0)
+PASS: HIGH -> LOW ps (140000)
+PASS: HIGH -> LOW cycles (14)
+PASS: HIGH -> LOW valid
+PASS: HIGH -> LOW energy (0)
+PASS: HIGH -> MEDIUM ps (90000)
+PASS: HIGH -> MEDIUM cycles (9)
+PASS: HIGH -> MEDIUM valid
+PASS: HIGH -> MEDIUM energy (0)
+PASS: HIGH -> HIGH ps (0)
+PASS: HIGH -> HIGH cycles (0)
+PASS: HIGH -> HIGH valid
+PASS: HIGH -> HIGH energy (0)
+PASS: INVALID -> LOW rejected
+PASS: INVALID -> LOW ps (0)
+PASS: INVALID -> LOW cycles (0)
+PASS: INVALID -> LOW energy (0)
+PASS: INVALID -> MEDIUM rejected
+PASS: INVALID -> MEDIUM ps (0)
+PASS: INVALID -> MEDIUM cycles (0)
+PASS: INVALID -> MEDIUM energy (0)
+PASS: INVALID -> HIGH rejected
+PASS: INVALID -> HIGH ps (0)
+PASS: INVALID -> HIGH cycles (0)
+PASS: INVALID -> HIGH energy (0)
+PASS: INVALID -> INVALID rejected
+PASS: INVALID -> INVALID ps (0)
+PASS: INVALID -> INVALID cycles (0)
+PASS: INVALID -> INVALID energy (0)
+PASS: LOW -> INVALID rejected
+PASS: LOW -> INVALID ps (0)
+PASS: LOW -> INVALID cycles (0)
+PASS: LOW -> INVALID energy (0)
+PASS: MEDIUM -> INVALID rejected
+PASS: MEDIUM -> INVALID ps (0)
+PASS: MEDIUM -> INVALID cycles (0)
+PASS: MEDIUM -> INVALID energy (0)
+PASS: HIGH -> INVALID rejected
+PASS: HIGH -> INVALID ps (0)
+PASS: HIGH -> INVALID cycles (0)
+PASS: HIGH -> INVALID energy (0)
+PASS: asymmetric LOW/HIGH pair
+PASS: asymmetric LOW/MEDIUM pair
+PASS: asymmetric MEDIUM/HIGH pair
+PASS: upward costs exceed downward
+PASS: cal LOW -> MEDIUM ps (100001)
+PASS: cal LOW -> MEDIUM ceil (11)
+PASS: cal LOW -> MEDIUM energy (777)
+PASS: cal MEDIUM -> HIGH ps (5000)
+PASS: cal MEDIUM -> HIGH ceil (1)
+PASS: cal MEDIUM -> HIGH energy (1234)
+PASS: cal LOW -> LOW ps (15000)
+PASS: cal LOW -> LOW ceil (2)
+PASS: default LOW -> LOW ps (0)
+PASS: cal HIGH -> LOW untouched (140000)
+PASS: cal HIGH -> LOW cycles (14)
+==========================
+PASS = 79  FAIL = 0
+ALL TESTS PASSED
+==========================
+$finish called at time : 27 ns : File "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_transition_cost.v" Line 213
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 14:56:54 2026...
+======================================================
+=== tb_p1_pll_behavioral
+======================================================
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: E:/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top tb_p1_pll_behavioral -snapshot tb_p1_pll_behavioral_sim 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p1_pll_behavioral
+Compiling module work.tb_p1_pll_behavioral
+Built simulation snapshot tb_p1_pll_behavioral_sim
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sun Nov  8 14:56:58 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_p1_pll_behavioral_sim/xsim_script.tcl
+# xsim {tb_p1_pll_behavioral_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+=== P1 BEHAVIORAL PLL TEST START ===
+PASS: reset: pll_lock_in low
+PASS: reset: gpu_clk low
+PASS: reset: cfg_reject low
+PASS: reset: no gpu_clk edges (0)
+PASS: startup: lock latency (20)
+PASS: startup: code is LOW
+PASS: LOW period (20.000 ns)
+PASS: LOW high time (10.000 ns)
+PASS: LOW->MED: lock dropped
+PASS: LOW->MED: clock stopped
+PASS: LOW->MED: settle cycles (10)
+PASS: LOW->MED: no edges while unlocked (0)
+PASS: MEDIUM period (10.000 ns)
+PASS: MEDIUM high time (5.000 ns)
+PASS: MED->HIGH: settle cycles (12)
+PASS: MED->HIGH: no edges while unlocked (0)
+PASS: HIGH period (5.000 ns)
+PASS: HIGH high time (2.500 ns)
+PASS: HIGH->LOW: settle cycles (14)
+PASS: LOW period again (20.000 ns)
+PASS: stable period 1 (20.000 ns)
+PASS: stable period 2 (20.000 ns)
+PASS: stable period 3 (20.000 ns)
+PASS: zero cost floored to MIN_SETTLE_CYCLES (1)
+PASS: reserved: cfg_reject set
+PASS: reserved: stays unlocked
+PASS: reserved: clock stopped
+PASS: reserved: no gpu_clk edges (0)
+PASS: recovery: cfg_reject cleared
+PASS: recovery: settle cycles (6)
+PASS: recovery: HIGH period (5.000 ns)
+PASS: mid-settle: still unlocked
+PASS: mid-settle: restarted settle cycles (5)
+PASS: mid-settle: final code is MEDIUM
+PASS: mid-settle: MEDIUM period (10.000 ns)
+PASS: reset in settle: lock low
+PASS: reset in settle: clock low
+PASS: reset in settle: code back to LOW
+PASS: reset in settle: restarts startup (20)
+PASS: reset in settle: LOW period (20.000 ns)
+PASS: reset in startup: still unlocked
+PASS: reset in startup: eventually locks
+PASS: repeat 1 settle (3)
+PASS: repeat 2 settle (3)
+PASS: repeat 3 settle (3)
+PASS: repeat: LOW period (20.000 ns)
+PASS: one-cycle strobe: settle cycles (4)
+PASS: one-cycle strobe: HIGH period (5.000 ns)
+==========================
+PASS = 48  FAIL = 0
+ALL TESTS PASSED
+==========================
+$finish called at time : 2462500 ps : File "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_behavioral.v" Line 340
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 14:57:01 2026...
+======================================================
+=== tb_p1_pll_top
+======================================================
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: E:/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top tb_p1_pll_top -snapshot tb_p1_pll_top_sim 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p1_pll_controller
+Compiling module work.p1_pll_transition_cost_default
+Compiling module work.p1_pll_behavioral
+Compiling module work.p1_pll_top
+Compiling module work.p1_pll_controller(RECONFIG_CYCLE...
+Compiling module work.p1_pll_top(RECONFIG_CYCLES=1)
+Compiling module work.p1_pll_controller(LOCK_TIMEOUT=0...
+Compiling module work.p1_pll_top(LOCK_TIMEOUT=0)
+Compiling module work.p1_pll_controller(LOCK_TIMEOUT=8...
+Compiling module work.p1_pll_top(LOCK_TIMEOUT=8)
+Compiling module work.tb_p1_pll_top
+Built simulation snapshot tb_p1_pll_top_sim
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sun Nov  8 14:57:05 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_p1_pll_top_sim/xsim_script.tcl
+# xsim {tb_p1_pll_top_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+=== P1 TOP TEST START ===
+PASS: reset: pll_busy low
+PASS: reset: pll_done low
+PASS: reset: freq_ack low
+PASS: reset: pll_error low
+PASS: reset: clock_valid low
+PASS: reset: pll_locked low
+PASS: reset: gpu_clk low
+PASS: reset: no gpu_clk edges (0)
+PASS: reset: reports LOW
+PASS: startup: pll_locked high
+PASS: startup: reports LOW
+PASS: startup: no freq_ack (0)
+PASS: startup: no error
+PASS: startup: LOW period (20.000 ns)
+PASS: startup: LOW high time (10.000 ns)
+PASS: startup: cv rises after lock
+PASS: startup: cv lag after lock (3)
+PASS: LOW->MED matrix cycles (10)
+PASS: LOW->MED one ack (1)
+PASS: LOW->MED busy cycles (18)
+PASS: LOW->MED reports target
+PASS: LOW->MED clock_valid
+PASS: LOW->MED no error
+PASS: LOW->MED period (10.000 ns)
+PASS: LOW->MED high time (5.000 ns)
+PASS: LOW->MED cv falls before lock
+PASS: LOW->MED cv rises after lock
+PASS: LOW->MED cv lag after lock (4)
+PASS: MED->HIGH matrix cycles (12)
+PASS: MED->HIGH one ack (1)
+PASS: MED->HIGH busy cycles (20)
+PASS: MED->HIGH reports target
+PASS: MED->HIGH clock_valid
+PASS: MED->HIGH no error
+PASS: MED->HIGH period (5.000 ns)
+PASS: MED->HIGH high time (2.500 ns)
+PASS: MED->HIGH cv falls before lock
+PASS: MED->HIGH cv rises after lock
+PASS: MED->HIGH cv lag after lock (4)
+PASS: HIGH->LOW matrix cycles (14)
+PASS: HIGH->LOW one ack (1)
+PASS: HIGH->LOW busy cycles (22)
+PASS: HIGH->LOW reports target
+PASS: HIGH->LOW clock_valid
+PASS: HIGH->LOW no error
+PASS: HIGH->LOW period (20.000 ns)
+PASS: HIGH->LOW high time (10.000 ns)
+PASS: HIGH->LOW cv falls before lock
+PASS: HIGH->LOW cv rises after lock
+PASS: HIGH->LOW cv lag after lock (4)
+PASS: LOW->HIGH matrix cycles (18)
+PASS: LOW->HIGH one ack (1)
+PASS: LOW->HIGH busy cycles (26)
+PASS: LOW->HIGH reports target
+PASS: LOW->HIGH clock_valid
+PASS: LOW->HIGH no error
+PASS: LOW->HIGH period (5.000 ns)
+PASS: LOW->HIGH high time (2.500 ns)
+PASS: LOW->HIGH cv falls before lock
+PASS: LOW->HIGH cv rises after lock
+PASS: LOW->HIGH cv lag after lock (4)
+PASS: HIGH->MED matrix cycles (9)
+PASS: HIGH->MED one ack (1)
+PASS: HIGH->MED busy cycles (17)
+PASS: HIGH->MED reports target
+PASS: HIGH->MED clock_valid
+PASS: HIGH->MED no error
+PASS: HIGH->MED period (10.000 ns)
+PASS: HIGH->MED high time (5.000 ns)
+PASS: HIGH->MED cv falls before lock
+PASS: HIGH->MED cv rises after lock
+PASS: HIGH->MED cv lag after lock (4)
+PASS: MED->LOW matrix cycles (8)
+PASS: MED->LOW one ack (1)
+PASS: MED->LOW busy cycles (16)
+PASS: MED->LOW reports target
+PASS: MED->LOW clock_valid
+PASS: MED->LOW no error
+PASS: MED->LOW period (20.000 ns)
+PASS: MED->LOW high time (10.000 ns)
+PASS: MED->LOW cv falls before lock
+PASS: MED->LOW cv rises after lock
+PASS: MED->LOW cv lag after lock (4)
+PASS: same LOW: one ack (1)
+PASS: same LOW: busy cycles (1)
+PASS: same LOW: clock never stopped
+PASS: same LOW: model stayed locked
+PASS: same LOW: period unchanged (20.000 ns)
+PASS: same MEDIUM: one ack (1)
+PASS: same MEDIUM: busy cycles (1)
+PASS: same MEDIUM: clock_valid held
+PASS: same MEDIUM: period (10.000 ns)
+PASS: same HIGH: one ack (1)
+PASS: same HIGH: busy cycles (1)
+PASS: same HIGH: period (5.000 ns)
+PASS: reserved: no freq_ack (0)
+PASS: reserved: pll_error set
+PASS: reserved: clock still valid
+PASS: reserved: model never saw it
+PASS: reserved: level unchanged
+PASS: reserved: period undisturbed (5.000 ns)
+PASS: err_clear: error cleared
+PASS: asymmetry: LOW->HIGH busy (26)
+PASS: asymmetry: HIGH->LOW busy (22)
+PASS: asymmetry: upshift is longer
+PASS: mid-change: one ack (1)
+PASS: mid-change: original target kept
+PASS: mid-change: HIGH period (5.000 ns)
+PASS: repeated: four acks (4)
+PASS: repeated: ends at LOW
+PASS: repeated: no error
+PASS: repeated: LOW period (20.000 ns)
+PASS: reset in reconfig: busy low
+PASS: reset in reconfig: done low
+PASS: reset in reconfig: cv low
+PASS: reset in reconfig: gpu_clk low
+PASS: reset in reconfig: reports LOW
+PASS: reset in reconfig: no ack (0)
+PASS: reset in reconfig: back at LOW (20.000 ns)
+PASS: reset in settle: still busy
+PASS: reset in settle: busy low
+PASS: reset in settle: cv low
+PASS: reset in settle: gpu_clk low
+PASS: reset in settle: no ack (0)
+PASS: reset in settle: reports LOW
+PASS: lock loss in DONE: still one ack (1)
+PASS: lock loss in DONE: done still high
+PASS: lock loss: clock_valid dropped
+PASS: lock loss: pll_error set
+INFO: clock_valid dropped 5 cycles after lock was lost
+PASS: lock loss: cv drop follows lock loss
+PASS: lock loss: recovered
+PASS: lock loss: no extra ack (1)
+PASS: lock loss: level unchanged
+PASS: stable 1 (5.000 ns)
+PASS: stable 2 (5.000 ns)
+PASS: stable: periods identical
+--- main DUT done, 136 checks so far ---
+PASS: RECONFIG_CYCLES=1: starts unlocked
+PASS: RECONFIG_CYCLES=1: starts at LOW
+PASS: RECONFIG_CYCLES=1: reaches HIGH
+PASS: RECONFIG_CYCLES=1: clock_valid
+PASS: RECONFIG_CYCLES=1: no error
+PASS: LOCK_TIMEOUT=0: reaches HIGH
+PASS: LOCK_TIMEOUT=0: no error
+PASS: LOCK_TIMEOUT=0: clock_valid
+WARNING: LOCK_TIMEOUT = 8 cannot cover settle_cycles = 18 for 00 -> 10 at 6775000
+PASS: LOCK_TIMEOUT too small: error raised
+PASS: LOCK_TIMEOUT too small: no completion
+PASS: K_TIMEOUT too small: level not committed
+PASS: LOCK_TIMEOUT too small: clock_valid low
+==========================
+PASS = 148  FAIL = 0
+ALL TESTS PASSED
+==========================
+$finish called at time : 7370 ns : File "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_pll_top.v" Line 573
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 14:57:07 2026...
+======================================================
+=== tb_p1_p3_integration
+======================================================
+Vivado Simulator v2026.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: E:/2026.1/Vivado/bin/unwrapped/win64.o/xelab.exe --debug typical --relax -top tb_p1_p3_integration -snapshot tb_p1_p3_integration_sim 
+Multi-threading is on. Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4328] File: C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_p3_integration.v Line: 290 : Sensitivity on input argument "level" of task "run_level_change" may never get triggered.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module work.p3_dvfs_controller
+Compiling module work.p1_pll_controller
+Compiling module work.p1_pll_transition_cost_default
+Compiling module work.p1_pll_behavioral
+Compiling module work.p1_pll_top
+Compiling module work.p1_pll_controller(LOCK_TIMEOUT=8...
+Compiling module work.p1_pll_top(LOCK_TIMEOUT=8)
+Compiling module work.tb_p1_p3_integration
+Built simulation snapshot tb_p1_p3_integration_sim
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sun Nov  8 14:57:12 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/tb_p1_p3_integration_sim/xsim_script.tcl
+# xsim {tb_p1_p3_integration_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+=== P1 / P3 INTEGRATION TEST START ===
+PASS: reset: pll_req low
+PASS: reset: volt_req low
+PASS: reset: pll_done low
+PASS: reset: clock_valid low
+PASS: reset: P3 at LOW
+PASS: reset: P1 at LOW
+PASS: startup: no P1 ack (0)
+PASS: startup: P3 made no request
+PASS: startup: LOW period (20.000 ns)
+PASS: upshift: voltage requested first
+PASS: upshift: one P1 ack (1)
+PASS: upshift: pll_req high cycles (28)
+PASS: upshift: P1 at HIGH
+PASS: upshift: P3 at HIGH
+PASS: upshift: no premature completion
+PASS: upshift: HIGH period (5.000 ns)
+PASS: downshift: frequency requested first
+PASS: downshift: pll_req high cycles (24)
+PASS: downshift: P1 at LOW
+PASS: downshift: LOW period (20.000 ns)
+PASS: LOW->MED one P1 ack (1)
+PASS: LOW->MED pll_req high cycles (20)
+PASS: LOW->MED P1 reports target
+PASS: LOW->MED P3 reports target
+PASS: LOW->MED clock_valid
+PASS: LOW->MED no P1 error
+PASS: LOW->MED no premature completion
+PASS: LOW->MED gpu_clk period (10.000 ns)
+PASS: MED->HIGH one P1 ack (1)
+PASS: MED->HIGH pll_req high cycles (22)
+PASS: MED->HIGH P1 reports target
+PASS: MED->HIGH P3 reports target
+PASS: MED->HIGH clock_valid
+PASS: MED->HIGH no P1 error
+PASS: MED->HIGH no premature completion
+PASS: MED->HIGH gpu_clk period (5.000 ns)
+PASS: repeat: HIGH->LOW cycles again (24)
+PASS: repeat LOW->MED one P1 ack (1)
+PASS: repeat LOW->MED pll_req high cycles (20)
+PASS: repeat LOW->MED P1 reports target
+PASS: repeat LOW->MED P3 reports target
+PASS: repeat LOW->MED clock_valid
+PASS: repeat LOW->MED no P1 error
+PASS: repeat LOW->MED no premature completion
+PASS: repeat LOW->MED gpu_clk period (10.000 ns)
+PASS: total P1 acks for six level changes (6)
+--- Test 8: known P1/P3 deadlock, expected to hang ---
+WARNING: LOCK_TIMEOUT = 8 cannot cover settle_cycles = 18 for 00 -> 10 at 2675000
+PASS: deadlock: P1 raised pll_error
+PASS: deadlock: P1 never acknowledged
+PASS: deadlock: no freq_ack issued (0)
+PASS: deadlock: P3 still asserting pll_req
+PASS: deadlock: P3 stuck in FREQUENCY_CHANGE
+PASS: deadlock: P3 level not committed
+PASS: deadlock: still stuck after 300 cycles
+PASS: deadlock: P3 level still not committed
+PASS: deadlock: GPU clock left unusable
+PASS: deadlock: reset clears P3 request
+PASS: deadlock: reset clears P1 error
+==========================
+PASS = 57  FAIL = 0
+ALL TESTS PASSED
+==========================
+
+KNOWN DEFECT: P1 ERROR deadlocks P3. See test 8 above and
+docs/p1_pll_characterization.md. P3/P1 integration is NOT
+complete while this is open.
+
+$finish called at time : 5850 ns : File "C:/Users/anand/sruthi/GPU_DVFS/P1_PLL/tb/tb_p1_p3_integration.v" Line 410
+exit
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 14:57:14 2026...

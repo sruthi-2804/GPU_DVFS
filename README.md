@@ -11,7 +11,7 @@ merged into `main` once reviewed.
 |-------|-----------|----------------|--------|--------|
 | P1 | `P1_PLL/` | PLL / clock generation. Accepts a frequency request, reports lock. | `p1-pll` | not yet started |
 | P2 | `P2_Workload_Monitor/` | Monitors workload, requests a performance level. | `p2-workload-monitor` | not yet started |
-| P3 | `P3_DVFS_Controller/` | DVFS controller FSM. Sequences voltage and frequency changes safely. | `p3-dvfs-controller` | RTL complete, behavioral simulation passing directed tests |
+| P3 | `P3_DVFS_Controller/` | DVFS controller FSM. Sequences voltage and frequency changes safely. | `p3-dvfs-controller` | FSM, persistence counter, hysteresis level selection and adaptive residency timer each complete and passing directed behavioral tests **standalone**; thresholds and residency durations provisional; the four are not yet integrated |
 | P4 | `P4_Voltage_Control/` | Voltage regulator control. Accepts a level request, reports settled. | `p4-voltage-control` | not yet started |
 
 ## System overview
